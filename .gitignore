@@ -1,0 +1,12 @@
+# Compilación
+build/
+sources.txt
+*.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.settings/
+.classpath
+.project

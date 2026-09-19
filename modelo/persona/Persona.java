@@ -1,3 +1,5 @@
+package modelo.persona;
+
 public abstract class Persona {
 
     private String documentoIdentidad;

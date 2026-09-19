@@ -1,3 +1,7 @@
+package modelo.expediente;
+
+import modelo.persona.Paciente;
+
 public class Expediente {
 
     private Long id;

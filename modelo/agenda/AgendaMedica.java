@@ -1,7 +1,18 @@
+package modelo.agenda;
+
+import excepcion.DatosCitaInvalidosException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.catalogo.Especialidad;
+import modelo.catalogo.RangoHorario;
+import modelo.cita.Cita;
+import modelo.persona.Empleado;
 
+/**
+ * Agenda de un profesional para una fecha y rango horario determinados.
+ * Controla el cupo máximo y la disponibilidad de las citas registradas.
+ */
 public class AgendaMedica {
 
     private Long id;
@@ -23,11 +34,10 @@ public class AgendaMedica {
         this.especialidad = especialidad;
         this.fecha = fecha;
         this.rangoHorario = rangoHorario;
-        this.cupoMaximo = cupoMaximo;
+        setCupoMaximo(cupoMaximo);
     }
 
     // --- Getters y Setters ---
-
     public Long getId() { return id; }
 
     public Empleado getMedico() { return medico; }
@@ -43,11 +53,18 @@ public class AgendaMedica {
     public void setRangoHorario(RangoHorario rangoHorario) { this.rangoHorario = rangoHorario; }
 
     public int getCupoMaximo() { return cupoMaximo; }
-    public void setCupoMaximo(int cupoMaximo) { this.cupoMaximo = cupoMaximo; }
+
+    public final void setCupoMaximo(int cupoMaximo) {
+        if (cupoMaximo < 1) {
+            throw new DatosCitaInvalidosException("El cupo máximo de la agenda debe ser al menos 1");
+        }
+        this.cupoMaximo = cupoMaximo;
+    }
 
     public boolean isActiva() { return activa; }
     public void setActiva(boolean activa) { this.activa = activa; }
 
     public List<Cita> getCitas() { return citas; }
     public void setCitas(List<Cita> citas) { this.citas = citas != null ? citas : new ArrayList<>(); }
+
 }

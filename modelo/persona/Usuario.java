@@ -1,3 +1,5 @@
+package modelo.persona;
+
 public class Usuario extends Persona {
 
     private String nombreUsuario;
