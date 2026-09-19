@@ -1,11 +1,10 @@
 public class Paciente extends Persona {
-
     public Paciente() {
         super();
     }
 
-    public Paciente(String documentoIdentidad, String nombres, String apellidos) {
-        super(documentoIdentidad, nombres, apellidos);
+    public Paciente(String documentoIdentidad, String nombres, String apellidos, String correo, String telefono, String direccion) {
+        super(documentoIdentidad, nombres, apellidos, correo, telefono, direccion);
     }
 
     @Override
