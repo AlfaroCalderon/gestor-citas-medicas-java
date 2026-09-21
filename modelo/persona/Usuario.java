@@ -21,6 +21,7 @@ public class Usuario extends Persona {
         return "Usuario del sistema (" + (rolSistema != null ? rolSistema : "") + ")";
     }
 
+    // --- Getters y Setters ---
     public Long getId(){return id;}
     public void setId(Long id){
         if(id == null || id <= 0) throw new IllegalArgumentException("ID del paciente debe ser un número positivo");

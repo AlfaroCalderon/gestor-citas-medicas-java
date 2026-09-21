@@ -1,6 +1,8 @@
 package modelo.cita;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
 import modelo.agenda.AgendaMedica;
 import modelo.catalogo.EstadoCita;
 import modelo.catalogo.Prioridad;
@@ -19,8 +21,17 @@ public abstract class Cita {
     private Cita citaOrigen;
 
     protected Cita(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo) {
-        if (agenda == null) {
+        if (Objects.isNull(agenda)) {
             throw new IllegalArgumentException("La agenda médica es obligatoria para la cita");
+        }
+        if (Objects.isNull(paciente)) {
+            throw new IllegalArgumentException("El paciente es obligatorio para la cita");
+        }
+        if (Objects.isNull(prioridad)) {
+            throw new IllegalArgumentException("La prioridad es obligatoria para la cita");
+        }
+        if (Objects.isNull(tipo)) {
+            throw new IllegalArgumentException("El tipo de cita es obligatorio");
         }
         this.agenda = agenda;
         this.paciente = paciente;
@@ -45,20 +56,37 @@ public abstract class Cita {
 
     public AgendaMedica getAgenda() { return agenda; }
 
-    public Paciente getExpediente() { return paciente; }
-    public void setExpediente(Paciente paciente) { this.paciente = paciente; }
+    public Paciente getPaciente() { return paciente; }
+    public void setPaciente(Paciente paciente) { 
+        if (Objects.isNull(paciente)) throw new IllegalArgumentException("El paciente no puede ser null");
+        this.paciente = paciente; 
+    }
 
     public int getOrden() { return orden; }
-    public void setOrden(int orden) { this.orden = orden; }
+    public void setOrden(int orden) {
+        if (orden < 0) throw new IllegalArgumentException("El orden no puede ser negativo");
+        this.orden = orden;
+    }
 
     public EstadoCita getEstado() { return estado; }
 
     public Prioridad getPrioridad() { return prioridad; }
-    public void setPrioridad(Prioridad prioridad) { this.prioridad = prioridad; }
+    public void setPrioridad(Prioridad prioridad) {
+        if (Objects.isNull(prioridad)) throw new IllegalArgumentException("La prioridad no puede ser null");
+        this.prioridad = prioridad;
+    }
 
     public TipoCita getTipo() { return tipo; }
-    public void setTipo(TipoCita tipo) { this.tipo = tipo; }
+    public void setTipo(TipoCita tipo) {
+        if (Objects.isNull(tipo)) throw new IllegalArgumentException("El tipo de cita no puede ser null");
+        this.tipo = tipo;
+    }
 
     public Cita getCitaOrigen() { return citaOrigen; }
-    public void setCitaOrigen(Cita citaOrigen) { this.citaOrigen = citaOrigen; }
+    public void setCitaOrigen(Cita citaOrigen) {
+        if (citaOrigen == this) {
+            throw new IllegalArgumentException("Una cita no puede ser su propia cita origen");
+        }
+        this.citaOrigen = citaOrigen;
+    }
 }

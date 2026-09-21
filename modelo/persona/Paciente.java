@@ -1,5 +1,7 @@
 package modelo.persona;
 
+import java.util.Objects;
+
 public class Paciente extends Persona {
     private Long id;
     private String numeroExpediente;
@@ -19,6 +21,7 @@ public class Paciente extends Persona {
         return "Paciente";
     }
 
+    // --- Getters y Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { 
         if(id == null || id <= 0) throw new IllegalArgumentException("ID del paciente debe ser un número positivo");
@@ -27,7 +30,7 @@ public class Paciente extends Persona {
 
     public String getNumeroExpediente() { return numeroExpediente; }
     public void setNumeroExpediente(String numeroExpediente) { 
-        if (numeroExpediente == null || numeroExpediente.trim().isEmpty()) {
+        if (Objects.isNull(numeroExpediente)  || numeroExpediente.trim().isEmpty()) {
             throw new IllegalArgumentException("El número del expediente no puede ser nulo o vacío");
         }
         this.numeroExpediente = numeroExpediente.trim();

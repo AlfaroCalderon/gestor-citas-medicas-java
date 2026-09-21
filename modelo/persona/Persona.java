@@ -23,6 +23,7 @@ abstract class Persona {
         setDireccion(direccion); 
     }   
 
+    // --- Getters y Setters ---
     public String getDocumentoIdentidad() { return documentoIdentidad; }
     public void setDocumentoIdentidad(String documentoIdentidad) {
         this.documentoIdentidad = validarTexto(documentoIdentidad, "DUI no puede ser nulo o vacío");
@@ -54,14 +55,14 @@ abstract class Persona {
     }
 
     protected static String validarTexto(String valor, String mensaje) {
-        if (valor == null || valor.trim().isEmpty()) {
+        if (Objects.isNull(valor) || valor.trim().isEmpty()) {
             throw new DatosPersonaInvalidosException(mensaje);
         }
         return valor.trim();
     }
 
     public String getNombreCompleto() {
-        return (nombres == null ? "" : nombres) + " " + (apellidos == null ? "" : apellidos);
+        return (Objects.isNull(nombres) ? "" : nombres) + " " + (Objects.isNull(apellidos) ? "" : apellidos);
     }
 
     abstract String getRolDescriptivo();

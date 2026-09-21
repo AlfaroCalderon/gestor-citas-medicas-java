@@ -25,14 +25,14 @@ public class RangoHorario {
 
     public LocalTime getHoraInicio() { return horaInicio; }
     public void setHoraInicio(LocalTime horaInicio) {
-    if (horaInicio == null) throw new IllegalArgumentException("La hora de inicio no puede ser nula");
+    if (Objects.isNull(horaInicio)) throw new IllegalArgumentException("La hora de inicio no puede ser nula");
     if (horaFin != null && !horaInicio.isBefore(horaFin))throw new IllegalArgumentException("La hora de inicio debe ser anterior a la hora de fin");
     this.horaInicio = horaInicio;
     }
 
     public LocalTime getHoraFin() { return horaFin; }
     public void setHoraFin(LocalTime horaFin) {
-    if (horaFin == null) throw new IllegalArgumentException("La hora de fin no puede ser nula");
+    if (Objects.isNull(horaFin)) throw new IllegalArgumentException("La hora de fin no puede ser nula");
     if (horaInicio != null && !horaFin.isAfter(horaInicio)) throw new IllegalArgumentException("La hora de fin debe ser posterior a la hora de inicio");
     this.horaFin = horaFin;
 }

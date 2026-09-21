@@ -50,8 +50,8 @@ public class CitaVirtual extends Cita {
     public String getPlataforma() { return plataforma; }
 
     public final void setPlataforma(String plataforma) {
-        if (plataforma != null && plataforma.trim().isEmpty()) {
-            throw new IllegalArgumentException("La plataforma no puede estar vacía");
+        if (Objects.isNull(plataforma) || plataforma.trim().isEmpty()) {
+            throw new IllegalArgumentException("La plataforma no puede estar vacía o ser null");
         }
         this.plataforma = plataforma;
     }
@@ -59,8 +59,8 @@ public class CitaVirtual extends Cita {
     public String getEnlaceReunion() { return enlaceReunion; }
 
     public final void setEnlaceReunion(String enlaceReunion) {
-        if (enlaceReunion != null && !enlaceReunion.trim().isEmpty()
-                && !enlaceReunion.toLowerCase().startsWith("https://")) {
+        if (Objects.isNull(enlaceReunion) || !enlaceReunion.trim().isEmpty()
+                || !enlaceReunion.toLowerCase().startsWith("https://")) {
             throw new IllegalArgumentException("El enlace de reunión debe iniciar con https://");
         }
         this.enlaceReunion = enlaceReunion;
