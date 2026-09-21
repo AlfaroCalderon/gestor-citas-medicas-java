@@ -6,7 +6,7 @@ import java.util.Objects;
 import modelo.agenda.AgendaMedica;
 import modelo.catalogo.Prioridad;
 import modelo.catalogo.TipoCita;
-import modelo.expediente.Expediente;
+import modelo.persona.Paciente;
 
 public class CitaPresencial extends Cita {
 
@@ -15,15 +15,15 @@ public class CitaPresencial extends Cita {
 
     private String consultorio;
 
-    public CitaPresencial(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaPresencial(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                         String consultorio) {
-        super(agenda, expediente, prioridad, tipo);
+        super(agenda, paciente, prioridad, tipo);
         setConsultorio(consultorio);
     }
 
-    public CitaPresencial(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaPresencial(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                           String consultorio, Cita citaOrigen) {
-        this(agenda, expediente, prioridad, tipo, consultorio);
+        this(agenda, paciente, prioridad, tipo, consultorio);
         setCitaOrigen(citaOrigen);
     }
 

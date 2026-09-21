@@ -6,7 +6,7 @@ import java.util.Objects;
 import modelo.agenda.AgendaMedica;
 import modelo.catalogo.Prioridad;
 import modelo.catalogo.TipoCita;
-import modelo.expediente.Expediente;
+import modelo.persona.Paciente;
 
 public class CitaDomiciliaria extends Cita {
 
@@ -16,21 +16,21 @@ public class CitaDomiciliaria extends Cita {
     private String direccionVisita;
     private String referenciaUbicacion;
 
-    public CitaDomiciliaria(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaDomiciliaria(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                             String direccionVisita) {
-        this(agenda, expediente, prioridad, tipo, direccionVisita, null);
+        this(agenda, paciente, prioridad, tipo, direccionVisita, null);
     }
 
-    public CitaDomiciliaria(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaDomiciliaria(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                             String direccionVisita, String referenciaUbicacion) {
-        super(agenda, expediente, prioridad, tipo);
+        super(agenda, paciente, prioridad, tipo);
         setDireccionVisita(direccionVisita);
         this.referenciaUbicacion = referenciaUbicacion;
     }
 
-    public CitaDomiciliaria(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaDomiciliaria(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                             String direccionVisita, String referenciaUbicacion, Cita citaOrigen) {
-        this(agenda, expediente, prioridad, tipo, direccionVisita, referenciaUbicacion);
+        this(agenda, paciente, prioridad, tipo, direccionVisita, referenciaUbicacion);
         setCitaOrigen(citaOrigen);
     }
 

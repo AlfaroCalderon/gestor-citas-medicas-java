@@ -6,7 +6,7 @@ import java.util.Objects;
 import modelo.agenda.AgendaMedica;
 import modelo.catalogo.Prioridad;
 import modelo.catalogo.TipoCita;
-import modelo.expediente.Expediente;
+import modelo.persona.Paciente;
 
 public class CitaVirtual extends Cita {
 
@@ -16,16 +16,16 @@ public class CitaVirtual extends Cita {
     private String plataforma;
     private String enlaceReunion;
 
-    public CitaVirtual(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaVirtual(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                        String plataforma, String enlaceReunion) {
-        super(agenda, expediente, prioridad, tipo);
+        super(agenda, paciente, prioridad, tipo);
         setPlataforma(plataforma);
         setEnlaceReunion(enlaceReunion);
     }
 
-    public CitaVirtual(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo,
+    public CitaVirtual(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo,
                        String plataforma, String enlaceReunion, Cita citaOrigen) {
-        this(agenda, expediente, prioridad, tipo, plataforma, enlaceReunion);
+        this(agenda, paciente, prioridad, tipo, plataforma, enlaceReunion);
         setCitaOrigen(citaOrigen);
     }
 

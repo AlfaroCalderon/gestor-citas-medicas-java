@@ -1,3 +1,5 @@
+package modelo.persona;
+import excepcion.DatosPersonaInvalidosException;
 import java.util.Objects;
 
 abstract class Persona {

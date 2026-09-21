@@ -5,48 +5,48 @@ import modelo.agenda.AgendaMedica;
 import modelo.catalogo.EstadoCita;
 import modelo.catalogo.Prioridad;
 import modelo.catalogo.TipoCita;
-import modelo.expediente.Expediente;
+import modelo.persona.Paciente;
 
 public abstract class Cita {
 
     private Long id;
     private final AgendaMedica agenda;
-    private Expediente expediente;
+    private Paciente paciente;
     private int orden;
     private EstadoCita estado;
     private Prioridad prioridad;
     private TipoCita tipo;
     private Cita citaOrigen;
 
-    protected Cita(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo) {
+    protected Cita(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo) {
         if (agenda == null) {
             throw new IllegalArgumentException("La agenda médica es obligatoria para la cita");
         }
         this.agenda = agenda;
-        this.expediente = expediente;
+        this.paciente = paciente;
         this.prioridad = prioridad;
         this.tipo = tipo;
         this.estado = EstadoCita.PROGRAMADA;
     }
 
-    protected Cita(AgendaMedica agenda, Expediente expediente, Prioridad prioridad, TipoCita tipo, Cita citaOrigen) {
-        this(agenda, expediente, prioridad, tipo);
+    protected Cita(AgendaMedica agenda, Paciente paciente, Prioridad prioridad, TipoCita tipo, Cita citaOrigen) {
+        this(agenda, paciente, prioridad, tipo);
         this.citaOrigen = citaOrigen;
     }
 
-    public abstract String getModalidad();
+    abstract String getModalidad();
 
-    public abstract BigDecimal calcularCosto(BigDecimal tarifaBase);
+    abstract BigDecimal calcularCosto(BigDecimal tarifaBase);
 
-    public abstract String obtenerIndicaciones();
+    abstract String obtenerIndicaciones();
 
     // --- Getters y Setters ---
     public Long getId() { return id; }
 
     public AgendaMedica getAgenda() { return agenda; }
 
-    public Expediente getExpediente() { return expediente; }
-    public void setExpediente(Expediente expediente) { this.expediente = expediente; }
+    public Paciente getExpediente() { return paciente; }
+    public void setExpediente(Paciente paciente) { this.paciente = paciente; }
 
     public int getOrden() { return orden; }
     public void setOrden(int orden) { this.orden = orden; }
