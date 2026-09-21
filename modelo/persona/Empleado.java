@@ -13,13 +13,11 @@ public class Empleado extends Persona {
     private Set<Especialidad> especialidades = new LinkedHashSet<>();
     private List<AgendaMedica> agendas = new ArrayList<>();
 
-    public Empleado(String documentoIdentidad, String nombres, String apellidos,
-                    String jvpm, Set<Especialidad> especialidades) {
-        super(documentoIdentidad, nombres, apellidos);
-        this.jvpm = jvpm;
-        if (especialidades != null) {
-            this.especialidades.addAll(especialidades);
-        }
+    public Empleado(int id, String documentoIdentidad, String nombres, String apellidos, String correo, String telefono, String direccion, String jvpm, Set<Especialidad> especialidades) {
+        super(documentoIdentidad, nombres, apellidos, correo, telefono, direccion);
+        
+        setJvpm(jvpm);
+        setEspecialidades(especialidades);
     }
 
     @Override
@@ -29,7 +27,9 @@ public class Empleado extends Persona {
 
     // --- Getters y Setters ---
     public String getJvpm() { return jvpm; }
-    public void setJvpm(String jvpm) { this.jvpm = jvpm; }
+    public void setJvpm(String jvpm) { 
+        this.jvpm = validarTexto(jvpm, "La Junta de Vigilancia de la Profesión Médica no puede ser nulo o vacío");
+    }
 
     public Set<Especialidad> getEspecialidades() { return especialidades; }
     public void setEspecialidades(Set<Especialidad> especialidades) {

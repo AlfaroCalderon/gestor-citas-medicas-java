@@ -5,45 +5,41 @@ import java.util.Objects;
 
 public class RangoHorario {
 
-    private Long id;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
+     private Long id;
+     private LocalTime horaInicio;
+     private LocalTime horaFin;
 
     public RangoHorario() {
     }
 
     public RangoHorario(Long id, LocalTime horaInicio, LocalTime horaFin) {
-        this.id = id;
-        setHoraInicio(horaInicio);
-        setHoraFin(horaFin);
-        validarCoherencia();
-    }
-
-    private void validarCoherencia() {
-        if (horaInicio != null && horaFin != null && !horaInicio.isBefore(horaFin)) {
-            throw new IllegalArgumentException("La hora de inicio (" + horaInicio
-                    + ") debe ser anterior a la hora de fin (" + horaFin + ")");
-        }
+       setId(id);
+       setHoraInicio(horaInicio);
+       setHoraFin(horaFin);
     }
 
     public Long getId() { return id; }
+    public void setId(Long id){
+        if(id == null || id <= 0 ) throw new IllegalArgumentException("ID del horario laboral debe ser un número positivo");
+        this.id = id;
+    }
 
     public LocalTime getHoraInicio() { return horaInicio; }
-
     public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = Objects.requireNonNull(horaInicio, "La hora de inicio es obligatoria");
-        validarCoherencia();
+    if (horaInicio == null) throw new IllegalArgumentException("La hora de inicio no puede ser nula");
+    if (horaFin != null && !horaInicio.isBefore(horaFin))throw new IllegalArgumentException("La hora de inicio debe ser anterior a la hora de fin");
+    this.horaInicio = horaInicio;
     }
 
     public LocalTime getHoraFin() { return horaFin; }
-
     public void setHoraFin(LocalTime horaFin) {
-        this.horaFin = Objects.requireNonNull(horaFin, "La hora de fin es obligatoria");
-        validarCoherencia();
-    }
+    if (horaFin == null) throw new IllegalArgumentException("La hora de fin no puede ser nula");
+    if (horaInicio != null && !horaFin.isAfter(horaInicio)) throw new IllegalArgumentException("La hora de fin debe ser posterior a la hora de inicio");
+    this.horaFin = horaFin;
+}
 
-    @Override
-    public String toString() {
-        return horaInicio + " - " + horaFin;
-    }
+
+   
+
+
 }
