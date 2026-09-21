@@ -1,4 +1,7 @@
+package modelo.catalogo;
+
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class RangoHorario {
 

@@ -1,3 +1,5 @@
+package modelo.catalogo;
+
 public enum EstadoCita {
     PROGRAMADA,
     CONFIRMADA,

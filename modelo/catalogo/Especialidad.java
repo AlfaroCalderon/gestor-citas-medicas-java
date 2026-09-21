@@ -1,3 +1,5 @@
+package modelo.catalogo;
+
 public class Especialidad {
 
     private Long id;
@@ -18,8 +20,10 @@ public class Especialidad {
     }
 
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("El nombre de la especialidad no puede ser nulo o vacío");
-        this.nombre = nombre.trim();
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    @Override
+    public String toString() {
+        return nombre != null ? nombre : "Especialidad sin nombre";
     }
 }

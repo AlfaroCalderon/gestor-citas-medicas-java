@@ -1,3 +1,5 @@
+package excepcion;
+
 public class CitaException extends RuntimeException {
     public CitaException(String mensaje) {
         super(mensaje);
@@ -7,4 +9,3 @@ public class CitaException extends RuntimeException {
         super(mensaje, causa);
     }
 }
-

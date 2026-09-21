@@ -1,8 +1,11 @@
+package modelo.persona;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import modelo.agenda.AgendaMedica;
+import modelo.catalogo.Especialidad;
 
 public class Empleado extends Persona {
 
@@ -23,7 +26,6 @@ public class Empleado extends Persona {
     }
 
     // --- Getters y Setters ---
-
     public String getJvpm() { return jvpm; }
     public void setJvpm(String jvpm) { 
         this.jvpm = validarTexto(jvpm, "La Junta de Vigilancia de la Profesión Médica no puede ser nulo o vacío");

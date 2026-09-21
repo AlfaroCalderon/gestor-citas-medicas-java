@@ -1,3 +1,5 @@
+package modelo.persona;
+
 public class Usuario extends Persona {
     private Long id;
     private String nombreUsuario;
