@@ -1,5 +1,7 @@
 package modelo.catalogo;
 
+import java.util.Objects;
+
 public class Especialidad {
 
     private Long id;
@@ -15,12 +17,15 @@ public class Especialidad {
 
     public Long getId() { return id; }
     public void setId(Long id) {
-        if (id == null || id <= 0) throw new IllegalArgumentException("El ID de la especialidad debe ser positivo");
+        if (Objects.isNull(id) || id <= 0) throw new IllegalArgumentException("El ID de la especialidad debe ser positivo");
         this.id = id;
     }
 
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) { 
+        
+        this.nombre = nombre; 
+    }
 
     @Override
     public String toString() {
