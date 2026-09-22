@@ -62,10 +62,13 @@ public class AgendaMedica {
 
     public LocalDate getFecha() { return fecha; }
     public void setFecha(LocalDate fecha) { 
-        if(Objects.isNull(fecha)) {
+        if (Objects.isNull(fecha)) {
             throw new DatosCitaInvalidosException("La fecha no puede ser nula");
         }
-        this.fecha = fecha; 
+        if (fecha.isBefore(LocalDate.now())) {
+            throw new DatosCitaInvalidosException("La fecha de la agenda no puede ser anterior a hoy");
+        }
+        this.fecha = fecha;  
     }
 
     public RangoHorario getRangoHorario() { return rangoHorario; }
@@ -81,6 +84,9 @@ public class AgendaMedica {
     public final void setCupoMaximo(int cupoMaximo) {
         if (cupoMaximo < 1) {
             throw new DatosCitaInvalidosException("El cupo máximo de la agenda debe ser al menos 1");
+        }
+        if (this.citas != null && cupoMaximo < this.citas.size()) {
+            throw new DatosCitaInvalidosException("El cupo máximo no puede ser menor que la cantidad de citas ya registradas");
         }
         this.cupoMaximo = cupoMaximo;
     }
@@ -100,8 +106,8 @@ public class AgendaMedica {
         this.citas.add(cita);
     }
 
-    public int getCantidadCitas() {
-        return citas.size();
+    public String getCantidadCitaCupos() {
+        return "Cantidad de citas registradas: " + citas.size() + " / Cupo máximo: " + cupoMaximo +" / Cupos disponibles: " + (cupoMaximo - citas.size());
     }
 
 }
