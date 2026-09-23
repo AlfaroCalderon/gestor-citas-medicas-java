@@ -1,4 +1,5 @@
 package modelo.persona;
+
 import excepcion.DatosPersonaInvalidosException;
 import java.util.Objects;
 
@@ -14,42 +15,61 @@ abstract class Persona {
     public Persona() {
     }
 
-    public Persona(String documentoIdentidad, String nombres, String apellidos, String correo, String telefono, String direccion) {
+    public Persona(String documentoIdentidad, String nombres, String apellidos, String correo, String telefono,
+            String direccion) {
         this.documentoIdentidad = validarTexto(documentoIdentidad, "DUI no puede ser nulo o vacío");
         setNombres(nombres);
         setApellidos(apellidos);
-        setCorreo(correo); 
-        setTelefono(telefono); 
-        setDireccion(direccion); 
-    }   
+        setCorreo(correo);
+        setTelefono(telefono);
+        setDireccion(direccion);
+    }
 
     // --- Getters y Setters ---
-    public String getDocumentoIdentidad() { return documentoIdentidad; }
+    public String getDocumentoIdentidad() {
+        return documentoIdentidad;
+    }
+
     public void setDocumentoIdentidad(String documentoIdentidad) {
         this.documentoIdentidad = validarTexto(documentoIdentidad, "DUI no puede ser nulo o vacío");
     }
 
-    public String getNombres() { return nombres; }
+    public String getNombres() {
+        return nombres;
+    }
+
     public void setNombres(String nombres) {
         this.nombres = validarTexto(nombres, "Nombre no puede ser nulo o vacío");
     }
 
-    public String getApellidos() { return apellidos; }
+    public String getApellidos() {
+        return apellidos;
+    }
+
     public void setApellidos(String apellidos) {
         this.apellidos = validarTexto(apellidos, "Apellido no puede ser nulo o vacío");
     }
 
-    public String getCorreo() { return correo; }
+    public String getCorreo() {
+        return correo;
+    }
+
     public void setCorreo(String correo) {
         this.correo = validarTexto(correo, "Correo no puede ser nulo o vacío");
     }
 
-    public String getTelefono() { return telefono; }
+    public String getTelefono() {
+        return telefono;
+    }
+
     public void setTelefono(String telefono) {
         this.telefono = validarTexto(telefono, "Teléfono no puede ser nulo o vacío");
     }
 
-    public String getDireccion() { return direccion; }
+    public String getDireccion() {
+        return direccion;
+    }
+
     public void setDireccion(String direccion) {
         this.direccion = validarTexto(direccion, "Dirección no puede ser nula o vacía");
     }
@@ -70,5 +90,23 @@ abstract class Persona {
     @Override
     public String toString() {
         return getRolDescriptivo() + ": " + getNombreCompleto().trim();
+    }
+
+    // Agragando hashCode y los equals
+
+    @Override
+    public int hashCode() {
+        // El documento de identidad es el identificador que se usara para Persona
+        return Objects.hash(documentoIdentidad);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Persona persona = (Persona) obj;
+        return Objects.equals(documentoIdentidad, persona.documentoIdentidad);
     }
 }
