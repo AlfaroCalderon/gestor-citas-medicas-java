@@ -60,7 +60,7 @@ public class CitaDomiciliaria extends Cita {
     public String getDireccionVisita() { return direccionVisita; }
 
     public final void setDireccionVisita(String direccionVisita) {
-        if (direccionVisita == null || direccionVisita.trim().isEmpty()) {
+        if (Objects.isNull(direccionVisita) || direccionVisita.trim().isEmpty()) {
             throw new IllegalArgumentException("La dirección de visita es obligatoria en una cita domiciliaria");
         }
         this.direccionVisita = direccionVisita;

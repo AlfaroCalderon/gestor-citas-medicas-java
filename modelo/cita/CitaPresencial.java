@@ -47,7 +47,7 @@ public class CitaPresencial extends Cita {
     public String getConsultorio() { return consultorio; }
 
     public final void setConsultorio(String consultorio) {
-        if (consultorio != null && consultorio.trim().isEmpty()) {
+        if (Objects.isNull(consultorio) || consultorio.trim().isEmpty()) {
             throw new IllegalArgumentException("El consultorio no puede estar vacío");
         }
         this.consultorio = consultorio;
