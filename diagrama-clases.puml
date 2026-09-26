@@ -1,0 +1,221 @@
+@startuml
+title Gestor de Citas Medicas - Diagrama de Clases
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+package "modelo.persona" {
+  abstract class Persona {
+    - documentoIdentidad: String
+    - nombres: String
+    - apellidos: String
+    - correo: String
+    - telefono: String
+    - direccion: String
+    # {static} validarTexto(valor: String, mensaje: String): String
+    + getNombreCompleto(): String
+    ~ getRolDescriptivo(): String
+  }
+
+  class Paciente {
+    - id: Long
+    - numeroExpediente: String
+    + getRolDescriptivo(): String
+  }
+
+  class Empleado {
+    - jvpm: String
+    - especialidades: Set<Especialidad>
+    - agendas: List<AgendaMedica>
+    + getRolDescriptivo(): String
+  }
+
+  class Usuario {
+    - id: Long
+    - nombreUsuario: String
+    - rolSistema: String
+    + getRolDescriptivo(): String
+  }
+}
+
+package "modelo.agenda" {
+  class AgendaMedica {
+    - id: Long
+    - medico: Empleado
+    - especialidad: Especialidad
+    - fecha: LocalDate
+    - rangoHorario: RangoHorario
+    - cupoMaximo: int
+    - activa: boolean
+    - citas: Set<Cita>
+    + setCitas(cita: Cita): void
+    + getCantidadCitaCupos(): String
+  }
+}
+
+package "modelo.cita" {
+  abstract class Cita {
+    - id: Long
+    - {readOnly} agenda: AgendaMedica
+    - paciente: Paciente
+    - orden: int
+    - estado: EstadoCita
+    - prioridad: Prioridad
+    - tipo: TipoCita
+    - citaOrigen: Cita
+    ~ {abstract} getModalidad(): String
+    ~ {abstract} calcularCosto(tarifaBase: BigDecimal): BigDecimal
+    ~ {abstract} obtenerIndicaciones(): String
+  }
+
+  class CitaPresencial {
+    - {static} {readOnly} MODALIDAD: String
+    - {static} {readOnly} FACTOR_TARIFA: BigDecimal
+    - consultorio: String
+    + getModalidad(): String
+    + calcularCosto(tarifaBase: BigDecimal): BigDecimal
+    + obtenerIndicaciones(): String
+  }
+
+  class CitaVirtual {
+    - {static} {readOnly} MODALIDAD: String
+    - {static} {readOnly} FACTOR_TARIFA: BigDecimal
+    - plataforma: String
+    - enlaceReunion: String
+    + getModalidad(): String
+    + calcularCosto(tarifaBase: BigDecimal): BigDecimal
+    + obtenerIndicaciones(): String
+  }
+
+  class CitaDomiciliaria {
+    - {static} {readOnly} MODALIDAD: String
+    - {static} {readOnly} FACTOR_TARIFA: BigDecimal
+    - direccionVisita: String
+    - referenciaUbicacion: String
+    + getModalidad(): String
+    + calcularCosto(tarifaBase: BigDecimal): BigDecimal
+    + obtenerIndicaciones(): String
+    + getDireccionCompleta(): String
+  }
+}
+
+package "modelo.catalogo" {
+  class Especialidad {
+    - id: Long
+    - nombre: String
+  }
+
+  class RangoHorario {
+    - id: Long
+    - horaInicio: LocalTime
+    - horaFin: LocalTime
+  }
+
+  enum EstadoCita {
+    PROGRAMADA
+    CONFIRMADA
+    ATENDIDA
+    CANCELADA
+    NO_ASISTIO
+    REPROGRAMADA
+  }
+
+  enum Prioridad {
+    BAJA
+    NORMAL
+    ALTA
+    URGENTE
+  }
+
+  enum TipoCita {
+    PRIMERA_VEZ
+    SUBSECUENTE
+  }
+}
+
+package "modelo.establecimiento" {
+  class Establecimiento {
+    - id: Long
+    - codigo: String
+    - nombre: String
+    - direccion: String
+    - telefono: String
+    - correo: String
+    - tipo: TipoEstablecimiento
+    - estado: EstadoEstablecimiento
+    - especialidades: List<String>
+    + agregarEspecialidad(especialidad: String): void
+    + eliminarEspecialidad(especialidad: String): void
+    + ofreceEspecialidad(especialidad: String): boolean
+    + estaActivo(): boolean
+  }
+
+  enum EstadoEstablecimiento {
+    ACTIVO
+    INACTIVO
+    EN_MANTENIMIENTO
+  }
+
+  enum TipoEstablecimiento {
+    HOSPITAL
+    CLINICA
+    CENTRO_SALUD
+    UNIDAD_MEDICA
+    CONSULTORIO
+    LABORATORIO
+  }
+}
+
+package "excepcion" {
+  class CitaException {
+    + CitaException(mensaje: String)
+    + CitaException(mensaje: String, causa: Throwable)
+  }
+
+  class CitaNoDisponibleException {
+    + CitaNoDisponibleException(mensaje: String)
+  }
+
+  class DatosCitaInvalidosException {
+    + DatosCitaInvalidosException(mensaje: String)
+  }
+
+  class DatosPersonaInvalidosException {
+    + DatosPersonaInvalidosException(mensaje: String)
+  }
+}
+
+class RuntimeException <<JDK>>
+class IllegalArgumentException <<JDK>>
+
+Persona <|-- Paciente
+Persona <|-- Empleado
+Persona <|-- Usuario
+
+Cita <|-- CitaPresencial
+Cita <|-- CitaVirtual
+Cita <|-- CitaDomiciliaria
+
+RuntimeException <|-- CitaException
+CitaException <|-- CitaNoDisponibleException
+CitaException <|-- DatosCitaInvalidosException
+IllegalArgumentException <|-- DatosPersonaInvalidosException
+
+Empleado "1" -- "0..*" AgendaMedica : medico / agendas
+Empleado "0..*" -- "0..*" Especialidad : especialidades
+Especialidad "1" -- "0..*" AgendaMedica : especialidad
+RangoHorario "1" -- "0..*" AgendaMedica : rangoHorario
+AgendaMedica "1" -- "0..*" Cita : agenda / citas
+Paciente "1" -- "0..*" Cita : paciente
+Cita "0..*" --> "0..1" Cita : citaOrigen
+Cita "0..*" --> "1" EstadoCita : estado
+Cita "0..*" --> "1" Prioridad : prioridad
+Cita "0..*" --> "1" TipoCita : tipo
+Establecimiento "0..*" --> "1" TipoEstablecimiento : tipo
+Establecimiento "0..*" --> "1" EstadoEstablecimiento : estado
+
+Persona ..> DatosPersonaInvalidosException : valida texto
+AgendaMedica ..> DatosCitaInvalidosException : valida agenda
+
+@enduml
